@@ -1,0 +1,407 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Locale;
+
+public class Tabula {
+	
+	public static void main(String[] args) throws ClassNotFoundException, IOException {
+		Scanner input = new Scanner(System.in);
+		BufferedReader	br = new BufferedReader(new InputStreamReader (System.in));
+		int menu = 0;
+		String vards = null;
+		String vardss = null;
+		double izbrauc = 0;
+		double izbrauc1 = 0;
+		int i = 0;
+		double iebrauc = 0;
+		double iebrauc1 = 0;
+		double cena = 0;
+		double cena1 = 0;
+		int delete = 0;
+		int change = 0;
+		
+		ArrayList<Darbinieki> stud = new ArrayList<Darbinieki>();
+		
+		stud.add(new Darbinieki("Daugavpils -> Dagda", 7.00 , 11.30, 7, "EUR"));
+		stud.add(new Darbinieki("Riga -> Ventspils", 8.30, 12.00,  7.50, "EUR"));
+		stud.add(new Darbinieki("Jekabpils -> Saulkraste",  12.15, 16.00,  4.75, "EUR"));
+		stud.add(new Darbinieki("Kraslava -> Riga", 9.00, 11.15,  4.50, "EUR"));
+		stud.add(new Darbinieki("Daugavpils -> Jelgava", 8.00, 11.00, 3, "EUR"));
+		stud.add(new Darbinieki("Dagda -> Riga", 6.45, 9.00, 2, "EUR"));
+		stud.add(new Darbinieki("Daugavpils -> Riga", 7.40, 10.25, 10, "EUR"));
+		stud.add(new Darbinieki("Ventspils -> Daugavpils", 13.00, 15.45,  7.50, "EUR"));
+		stud.add(new Darbinieki("Kraslava -> Ogre", 17.00, 20.30, 5, "EUR"));
+		stud.add(new Darbinieki("Ogre -> Jekabpils", 14.25, 17.15,  3.75, "EUR"));
+	
+		System.out.println("_____________________________________________________________________________");
+		System.out.println("|Nr.|        Virziens         |    Izbrauc    |    Iebrauc    |     Cena     |");
+		System.out.println("|___|_________________________|_______________|_______________|______________|");
+		for(Darbinieki v : stud) {
+			System.out.printf(Locale.US, "|%2d |%-25s|     %5.2f     |     %5.2f     |   %-5.2f %-1s  |\n",1+i++,v.getRoute(),v.getIzbrauc(),v.getIebrauc(), v.getCena(), v.getVards());
+			System.out.println("|___|_________________________|_______________|_______________|______________|");
+			stud.size();
+		}
+		do {
+			try{
+				int ii = 0;
+				PrintWriter file = new PrintWriter( new FileWriter("file.txt"));
+				file.println("_____________________________________________________________________________");
+		        file.println("|Nr.|        Virziens         |    Izbrauc    |    Iebrauc    |     Cena     |");
+		        file.println("|___|_________________________|_______________|_______________|______________|");
+		           for (Darbinieki v : stud){
+		        	   file.printf(Locale.US, "|%2d |%-25s|     %5.2f     |     %5.2f     |  %-5.2f %-1s   |\n",1+ii++,v.getRoute(),v.getIzbrauc(),v.getIebrauc(), v.getCena(), v.getVards());
+		        	  file.println("|___|_________________________|_______________|_______________|______________|");
+		           }
+		           file.close();
+		       } 
+			catch (FileNotFoundException e){
+				System.out.println("File not found.");
+		    }
+
+			System.out.println("");
+			System.out.println("___________________________________________________________________________________");
+			System.out.println("|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|");
+			System.out.println("|----------------------------- Informatīva sistēma -------------------------------|");
+			System.out.println("|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|");
+			System.out.println("|                                                                                 |");
+			System.out.println("|Ja vēlaties mainīt informāciju, atlasiet tieši to, ko vēlaties:                  |");
+			System.out.println("|(Izvēlieties vajadzīgo numuru un ievadiet to konsolē)                            |");
+			System.out.println("|                                                                                 |");
+			System.out.println("|1--> Ierakstīt failā informāciju par jaunu reisu                                 |");
+			System.out.println("|2--> Izslēgt no faila informāciju par atcelto reisu                              |");
+			System.out.println("|3--> Koriģēt informāciju par darbinieku                                          |");
+			System.out.println("|4--> Sakārtot informāciju failā pēc virziena un/vai biļetes cenas                |");
+			System.out.println("|5--> Atrast informāciju par visiem uzdotā virziena reisiem                       |");
+			System.out.println("|6--> Aprēķināt biļetes vidējo cenu                                               |");
+			System.out.println("|0--> EXIT                                                                        |");
+			System.out.println("|_________________________________________________________________________________|");
+				
+			menu = input.nextInt();
+				
+			switch(menu) {
+				case 1: {
+					System.out.println("Ievadiet virzienu (A -> B):");
+					vards =	br.readLine();
+					System.out.println("Ievadiet cikos izbrauc vilciens:");
+					izbrauc = input.nextDouble();
+					System.out.println("Ievadiet cikos iebrauc vilciens:");
+					iebrauc = input.nextDouble();
+					System.out.println("Ievadiet biļetes cenu:");
+					cena = input.nextDouble();
+					stud.add(new Darbinieki(vards, izbrauc, iebrauc, cena, "EUR"));
+					
+					
+					System.out.println("_____________________________________________________________________________");
+					System.out.println("|Nr.|        Virziens         |    Izbrauc    |    Iebrauc    |     Cena     |");
+					System.out.println("|___|_________________________|_______________|_______________|______________|");
+					
+					int iii = 0;
+					for(Darbinieki v : stud) {
+						System.out.printf(Locale.US, "|%2d |%-25s|     %5.2f     |     %5.2f     |   %-5.2f %-1s  |\n",1+iii++,v.getRoute(),v.getIzbrauc(),v.getIebrauc(), v.getCena(), v.getVards());
+						System.out.println("|___|_________________________|_______________|_______________|______________|");
+						stud.size();
+					}
+					System.out.println("");
+					System.out.println("Reiss ir pievienots.");
+				}
+					break;
+				case 2: {
+					System.out.println("Izvēlieties reisa numuru, kuru vēlaties izdzēst:");
+					delete = input.nextInt();
+					
+					stud.remove(delete);
+					
+					System.out.println("_____________________________________________________________________________");
+					System.out.println("|Nr.|        Virziens         |    Izbrauc    |    Iebrauc    |     Cena     |");
+					System.out.println("|___|_________________________|_______________|_______________|______________|");
+					int iii = 0;
+					for(Darbinieki v : stud) {
+						System.out.printf(Locale.US, "|%2d |%-25s|     %5.2f     |     %5.2f     |   %-5.2f %-1s  |\n",1+iii++,v.getRoute(),v.getIzbrauc(),v.getIebrauc(), v.getCena(), v.getVards());
+						System.out.println("|___|_________________________|_______________|_______________|______________|");
+						stud.size();
+					}
+					System.out.println("");
+					System.out.println("Informācija par reisu ar numuru " + delete + " ir izdzēsta.");
+				}
+					
+					break;
+
+				case 3: {
+					System.out.println("Izvēlieties tās reisa numuru, kuru vēlaties koriģēt:");
+					change = input.nextInt();
+					
+					System.out.println("Ievadiet virzienu (A -> B):");
+					vards =	br.readLine();
+					System.out.println("Ievadiet cikos izbrauc vilciens:");
+					izbrauc1 = input.nextDouble();
+					System.out.println("Ievadiet cikos iebrauc vilciens:");
+					iebrauc1 = input.nextDouble();
+					System.out.println("Ievadiet biļetes cenu:");
+					cena1 = input.nextDouble();
+					stud.remove(change);
+					stud.add(change, new Darbinieki(vardss, izbrauc1, iebrauc1, cena1, "EUR"));
+					
+					System.out.println("_____________________________________________________________________________");
+					System.out.println("|Nr.|        Virziens         |    Izbrauc    |    Iebrauc    |     Cena     |");
+					System.out.println("|___|_________________________|_______________|_______________|______________|");
+					int iii = 0;
+					for(Darbinieki v : stud) {
+						System.out.printf(Locale.US, "|%2d |%-25s|     %5.2f     |     %5.2f     |   %-5.2f %-1s  |\n",1+iii++,v.getRoute(),v.getIzbrauc(),v.getIebrauc(), v.getCena(), v.getVards());
+						System.out.println("|___|_________________________|_______________|_______________|______________|");
+						stud.size();
+					}
+					System.out.println("");
+					System.out.println("Informācija ir mainīta.");
+				}
+				break;
+				case 4: {
+					System.out.println("1--> Kārtot pēc virziena;");
+					System.out.println("2--> Kārtot pēc biļetes cena;");
+					menu = input.nextInt();
+					if (menu == 1) {
+					Collections.sort(stud, new Comparator<Darbinieki>() {
+						public int compare(Darbinieki lhs, Darbinieki rhs) {
+				            return lhs.getRoute().compareTo(rhs.getRoute());
+				        }
+				    });
+					System.out.println("_____________________________________________________________________________");
+					System.out.println("|Nr.|        Virziens         |    Izbrauc    |    Iebrauc    |     Cena     |");
+					System.out.println("|___|_________________________|_______________|_______________|______________|");
+					int iii = 0;
+					for(Darbinieki v : stud) {
+						System.out.printf(Locale.US, "|%2d |%-25s|     %5.2f     |     %5.2f     |   %-5.2f %-1s  |\n",1+iii++,v.getRoute(),v.getIzbrauc(),v.getIebrauc(), v.getCena(), v.getVards());
+						System.out.println("|___|_________________________|_______________|_______________|______________|");
+						stud.size();
+					}
+					System.out.println("Reisa tabula ir sakārtota pēc virziena.");
+					}
+					if (menu == 2) {
+						Collections.sort(stud, new Comparator<Darbinieki>() {
+							public int compare(Darbinieki lhs, Darbinieki rhs) {
+					            return Double.compare(lhs.getCena(), rhs.getCena());
+					        }
+					    });
+						System.out.println("_____________________________________________________________________________");
+						System.out.println("|Nr.|        Virziens         |    Izbrauc    |    Iebrauc    |     Cena     |");
+						System.out.println("|___|_________________________|_______________|_______________|______________|");
+						int iii = 0;
+						for(Darbinieki v : stud) {
+							System.out.printf(Locale.US, "|%2d |%-25s|     %5.2f     |     %5.2f     |   %-5.2f %-1s  |\n",1+iii++,v.getRoute(),v.getIzbrauc(),v.getIebrauc(), v.getCena(), v.getVards());
+							System.out.println("|___|_________________________|_______________|_______________|______________|");
+							stud.size();
+						}	
+						System.out.println("Reisa tabula ir sakārtota pēc biļetes cena.");
+					}
+					}
+				break;
+				
+				case 5: {
+					System.out.println("Atrast informāciju par ievadīto reisu (Izvēlieties vajadzīgo numuru un ievadiet to konsolē):");
+					System.out.println("1--> Daugavpils -> Dagda");
+					System.out.println("2--> Riga -> Ventspils");
+					System.out.println("3--> Jekabpils -> Saulkraste");
+					System.out.println("4--> Kraslava -> Riga");
+					System.out.println("5--> Daugavpils -> Jelgava");
+					System.out.println("6--> Dagda -> Riga");
+					System.out.println("7--> Daugavpils -> Riga");
+					System.out.println("8--> Ventspils -> Daugavpils");
+					System.out.println("9--> Kraslava -> Ogre");
+					System.out.println("0--> Ogre -> Jekabpils");
+					menu = input.nextInt();
+					if (menu == 1) {
+						
+					System.out.println("_____________________________________________________________________________");
+					System.out.println("|Nr.|        Virziens         |    Izbrauc    |    Iebrauc    |     Cena     |");
+					System.out.println("|___|_________________________|_______________|_______________|______________|");
+					int c = 0;
+					for(Darbinieki v : stud) {
+						if(v.getRoute() == "Daugavpils -> Dagda") {
+						System.out.printf(Locale.US, "|%2d |%-25s|     %5.2f     |     %5.2f     |   %-5.2f %-1s  |\n",1+c++,v.getRoute(),v.getIzbrauc(),v.getIebrauc(), v.getCena(), v.getVards());
+						System.out.println("|___|_________________________|_______________|_______________|______________|");
+						stud.size();
+						}
+						c++;
+						}
+					
+					}
+					if (menu == 2) {
+
+						System.out.println("_____________________________________________________________________________");
+						System.out.println("|Nr.|        Virziens         |    Izbrauc    |    Iebrauc    |     Cena     |");
+						System.out.println("|___|_________________________|_______________|_______________|______________|");
+						int c = 0;
+						for(Darbinieki v : stud) {
+							if(v.getRoute() == "Riga -> Ventspils") {
+							System.out.printf(Locale.US, "|%2d |%-25s|     %5.2f     |     %5.2f     |   %-5.2f %-1s  |\n",1+c++,v.getRoute(),v.getIzbrauc(),v.getIebrauc(), v.getCena(), v.getVards());
+							System.out.println("|___|_________________________|_______________|_______________|______________|");
+							stud.size();
+						}	
+							c++;
+						}
+						
+					}
+					if (menu == 3) {
+
+						System.out.println("_____________________________________________________________________________");
+						System.out.println("|Nr.|        Virziens         |    Izbrauc    |    Iebrauc    |     Cena     |");
+						System.out.println("|___|_________________________|_______________|_______________|______________|");
+						int c = 0;
+						for(Darbinieki v : stud) {
+							if(v.getRoute() == "Jekabpils -> Saulkraste") {
+							System.out.printf(Locale.US, "|%2d |%-25s|     %5.2f     |     %5.2f     |   %-5.2f %-1s  |\n",1+c++,v.getRoute(),v.getIzbrauc(),v.getIebrauc(), v.getCena(), v.getVards());
+							System.out.println("|___|_________________________|_______________|_______________|______________|");
+							stud.size();
+						}	
+							c++;
+						}
+						
+					}
+					if (menu == 4) {
+
+						System.out.println("_____________________________________________________________________________");
+						System.out.println("|Nr.|        Virziens         |    Izbrauc    |    Iebrauc    |     Cena     |");
+						System.out.println("|___|_________________________|_______________|_______________|______________|");
+						int c = 0;
+						for(Darbinieki v : stud) {
+							if(v.getRoute() == "Kraslava -> Riga") {
+							System.out.printf(Locale.US, "|%2d |%-25s|     %5.2f     |     %5.2f     |   %-5.2f %-1s  |\n",1+c++,v.getRoute(),v.getIzbrauc(),v.getIebrauc(), v.getCena(), v.getVards());
+							System.out.println("|___|_________________________|_______________|_______________|______________|");
+							stud.size();
+						}	
+							c++;
+						}
+						
+					}
+					if (menu == 5) {
+
+						System.out.println("_____________________________________________________________________________");
+						System.out.println("|Nr.|        Virziens         |    Izbrauc    |    Iebrauc    |     Cena     |");
+						System.out.println("|___|_________________________|_______________|_______________|______________|");
+						int c = 0;
+						for(Darbinieki v : stud) {
+							if(v.getRoute() == "Daugavpils -> Jelgava") {
+							System.out.printf(Locale.US, "|%2d |%-25s|     %5.2f     |     %5.2f     |   %-5.2f %-1s  |\n",1+c++,v.getRoute(),v.getIzbrauc(),v.getIebrauc(), v.getCena(), v.getVards());
+							System.out.println("|___|_________________________|_______________|_______________|______________|");
+							stud.size();
+						}	
+							c++;
+						}
+						
+					}
+					if (menu == 6) {
+
+						System.out.println("_____________________________________________________________________________");
+						System.out.println("|Nr.|        Virziens         |    Izbrauc    |    Iebrauc    |     Cena     |");
+						System.out.println("|___|_________________________|_______________|_______________|______________|");
+						int c = 0;
+						for(Darbinieki v : stud) {
+							if(v.getRoute() == "Dagda -> Riga") {
+							System.out.printf(Locale.US, "|%2d |%-25s|     %5.2f     |     %5.2f     |   %-5.2f %-1s  |\n",1+c++,v.getRoute(),v.getIzbrauc(),v.getIebrauc(), v.getCena(), v.getVards());
+							System.out.println("|___|_________________________|_______________|_______________|______________|");
+							stud.size();
+						}	
+							c++;
+						}
+						
+					}
+					if (menu == 7) {
+
+						System.out.println("_____________________________________________________________________________");
+						System.out.println("|Nr.|        Virziens         |    Izbrauc    |    Iebrauc    |     Cena     |");
+						System.out.println("|___|_________________________|_______________|_______________|______________|");
+						int c = 0;
+						for(Darbinieki v : stud) {
+							if(v.getRoute() == "Daugavpils -> Riga") {
+							System.out.printf(Locale.US, "|%2d |%-25s|     %5.2f     |     %5.2f     |   %-5.2f %-1s  |\n",1+c++,v.getRoute(),v.getIzbrauc(),v.getIebrauc(), v.getCena(), v.getVards());
+							System.out.println("|___|_________________________|_______________|_______________|______________|");
+							stud.size();
+						}	
+							c++;
+						}
+						
+					}
+					if (menu == 8) {
+
+						System.out.println("_____________________________________________________________________________");
+						System.out.println("|Nr.|        Virziens         |    Izbrauc    |    Iebrauc    |     Cena     |");
+						System.out.println("|___|_________________________|_______________|_______________|______________|");
+						int c = 0;
+						for(Darbinieki v : stud) {
+							if(v.getRoute() == "Ventspils -> Daugavpils") {
+							System.out.printf(Locale.US, "|%2d |%-25s|     %5.2f     |     %5.2f     |   %-5.2f %-1s  |\n",1+c++,v.getRoute(),v.getIzbrauc(),v.getIebrauc(), v.getCena(), v.getVards());
+							System.out.println("|___|_________________________|_______________|_______________|______________|");
+							stud.size();
+						}	
+							c++;
+						}
+						
+					}
+					if (menu == 9) {
+
+						System.out.println("_____________________________________________________________________________");
+						System.out.println("|Nr.|        Virziens         |    Izbrauc    |    Iebrauc    |     Cena     |");
+						System.out.println("|___|_________________________|_______________|_______________|______________|");
+						int c = 0;
+						for(Darbinieki v : stud) {
+							if(v.getRoute() == "Kraslava -> Ogre") {
+							System.out.printf(Locale.US, "|%2d |%-25s|     %5.2f     |     %5.2f     |   %-5.2f %-1s  |\n",1+c++,v.getRoute(),v.getIzbrauc(),v.getIebrauc(), v.getCena(), v.getVards());
+							System.out.println("|___|_________________________|_______________|_______________|______________|");
+							stud.size();
+						}	
+							c++;
+						}
+						
+					}
+					if (menu == 0) {
+
+						System.out.println("_____________________________________________________________________________");
+						System.out.println("|Nr.|        Virziens         |    Izbrauc    |    Iebrauc    |     Cena     |");
+						System.out.println("|___|_________________________|_______________|_______________|______________|");
+						int c = 0;
+						for(Darbinieki v : stud) {
+							if(v.getRoute() == "Ogre -> Jekabpils") {
+							System.out.printf(Locale.US, "|%2d |%-25s|     %5.2f     |     %5.2f     |   %-5.2f %-1s  |\n",1+c++,v.getRoute(),v.getIzbrauc(),v.getIebrauc(), v.getCena(), v.getVards());
+							System.out.println("|___|_________________________|_______________|_______________|______________|");
+							stud.size();
+						}	
+							c++;
+						}
+						
+					}
+				}
+				break;
+				
+				case 6: {
+					
+					for (Darbinieki v : stud) {
+					double sum = 0;
+					for (int io = 0; io < v.getCena(); io++) 
+						sum += v.getCena();
+					System.out.println("Biļetes vidēja cena:" + sum);
+					}
+					
+					double arg = 0;
+
+			        for (Darbinieki v : stud) {
+			        	for (int io = 0; io < v.getCena(); io++) {
+			                arg += v.getCena();
+			            }
+			            arg /= v.getCena();
+
+					System.out.println("Biļetes vidēja cena:" + arg);
+			        }
+					break;
+				}
+			}
+		}while(menu != 0);
+		input.close();
+	}	
+}
